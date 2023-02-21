@@ -1,103 +1,53 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="UTF-8">
-  <title>Passer un appel avec Zoiper5</title>
-  <style>
-    body {
-      color: black;
-      font-family: Arial, sans-serif;
-      height: 100vh;
-      margin: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background-color: #f9f9f9;
-    }
+  <head>
+    <meta charset="UTF-8" />
+    <title>Passer un appel avec Zoiper5</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://static.zoiper.com/js/zoiper5/zoiper-5.js"></script>
+  </head>
+  <body>
+    <h1>Passer un appel avec Zoiper5</h1>
+    <form>
+      <label for="numero">Numéro à appeler :</label>
+      <input type="text" id="numero" name="numero" /><br /><br />
+      <button type="button" onclick="passerAppel()">Appeler</button>
+      <button type="button" onclick="raccrocher()">Raccrocher</button>
+    </form>
+    <script>
+      // Initialisation de Zoiper5
+      Zoiper.init({
+        debug: true,
+        sip: {
+          enabled: true,
+          debug: true,
+          uri: "sip.zadarma.com",
+          ws_servers: ["wss://zoiper.zadarma.com:8089/ws"],
+          authorization_user: "326263",
+          password: "reyF2Ju31t",
+        },
+        audio: {
+          input: "default",
+          output: "default",
+        },
+      });
 
-    .container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      border: 2px solid gray;
-      border-radius: 5px;
-      padding: 20px;
-      background-color: white;
-      box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.5);
-    }
+      var session = null;
 
-    label {
-      margin: 10px;
-      font-weight: bold;
-    }
-
-    input {
-      margin: 10px;
-      padding: 10px;
-      border: 2px solid gray;
-      border-radius: 5px;
-      width: 300px;
-    }
-
-    button {
-      margin: 10px;
-      padding: 10px;
-      border: 2px solid gray;
-      border-radius: 5px;
-      background-color: #4CAF50;
-      color: white;
-      font-weight: bold;
-      cursor: pointer;
-      transition: transform 0.3s ease;
-    }
-
-    button:hover {
-      background-color: #3e8e41;
-      transform: scale(1.05);
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <label for="number-to-call">Numéro à appeler:</label>
-    <input type="text" id="number-to-call" name="number-to-call" placeholder="Saisir le numéro à appeler" value="+33 7 56 96 45 68">
-
-    <button type="button" id="call-button">Appeler</button>
-  </div>
-
-  <script src="https://static.zoiper.com/webphone/5.5.2/zoiper5.js"></script>
-  <script>
-    const sipUri = "sip.zadarma.com";
-    const sipUsername = "326263";
-    const sipPassword = "reyF2Ju31t";
-    const displayName = "Mon nom d'affichage";
-
-    Zoiper5.init({
-      onConnect: () => {
-        console.log("Zoiper5 connected to the server");
-      },
-      onDisconnect: () => {
-        console.log("Zoiper5 disconnected from the server");
-      },
-      onCallStatusChange: (callId, status) => {
-        console.log(`Zoiper5 call status: ${status}`);
-        if (status === "connected") {
-          alert("L'appel a été décroché");
-        } else if (status === "ended") {
-          alert("L'appel a été raccroché");
+      // Fonction pour passer l'appel
+      function passerAppel() {
+        var numero = $("#numero").val();
+        if (numero) {
+          session = Zoiper.sip.call(numero);
         }
-      },
-    });
+      }
 
-    const callButton = document.getElementById("call-button");
-    callButton.addEventListener("click", () => {
-      const numberToCall = document.getElementById("number-to-call").value;
-      const callOptions = {
-        destinationNumber: numberToCall,
-        displayName: displayName,
-        authUsername: sipUsername,
-        authPassword: sipPassword,
-        sipUri: sipUri,
-      };
-     
+      // Fonction pour raccrocher
+      function raccrocher() {
+        if (session) {
+          session.terminate();
+        }
+      }
+    </script>
+  </body>
+</html>
