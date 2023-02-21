@@ -1,98 +1,103 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="UTF-8">
-	<title>Passer un appel avec Zadarma</title>
-	<style>
-		body {
-			color: black;
-			font-family: Arial, sans-serif;
-			height: 100vh;
-			margin: 0;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			background-color: #f9f9f9;
-		}
+  <meta charset="UTF-8">
+  <title>Passer un appel avec Zoiper5</title>
+  <style>
+    body {
+      color: black;
+      font-family: Arial, sans-serif;
+      height: 100vh;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #f9f9f9;
+    }
 
-		.container {
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-			justify-content: center;
-			border: 2px solid gray;
-			border-radius: 5px;
-			padding: 20px;
-			background-color: white;
-			box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.5);
-		}
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid gray;
+      border-radius: 5px;
+      padding: 20px;
+      background-color: white;
+      box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.5);
+    }
 
-		label {
-			margin: 10px;
-			font-weight: bold;
-		}
+    label {
+      margin: 10px;
+      font-weight: bold;
+    }
 
-		input {
-			margin: 10px;
-			padding: 10px;
-			border: 2px solid gray;
-			border-radius: 5px;
-			width: 300px;
-		}
+    input {
+      margin: 10px;
+      padding: 10px;
+      border: 2px solid gray;
+      border-radius: 5px;
+      width: 300px;
+    }
 
-		button {
-			margin: 10px;
-			padding: 10px;
-			border: 2px solid gray;
-			border-radius: 5px;
-			background-color: #4CAF50;
-			color: white;
-			font-weight: bold;
-			cursor: pointer;
-			transition: transform 0.3s ease;
-		}
+    button {
+      margin: 10px;
+      padding: 10px;
+      border: 2px solid gray;
+      border-radius: 5px;
+      background-color: #4CAF50;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
 
-		button:hover {
-			background-color: #3e8e41;
-			transform: scale(1.05);
-		}
-	</style>
+    button:hover {
+      background-color: #3e8e41;
+      transform: scale(1.05);
+    }
+  </style>
 </head>
 <body>
-	<div class="container">
-		<label for="my-number">Mon numéro:</label>
-		<input type="text" id="my-number" name="my-number" placeholder="Saisir votre numéro">
+  <div class="container">
+    <label for="number-to-call">Numéro à appeler:</label>
+    <input type="text" id="number-to-call" name="number-to-call" placeholder="Saisir le numéro à appeler" value="+33 7 56 96 45 68">
 
-		<label for="number-to-call">Numéro à appeler:</label>
-		<input type="text" id="number-to-call" name="number-to-call" placeholder="Saisir le numéro à appeler">
+    <button type="button" id="call-button">Appeler</button>
+  </div>
 
-		<button type="button" id="call-button">Appeler</button>
-	</div>
+  <script src="https://static.zoiper.com/webphone/5.5.2/zoiper5.js"></script>
+  <script>
+    const sipUri = "sip.zadarma.com";
+    const sipUsername = "326263";
+    const sipPassword = "reyF2Ju31t";
+    const displayName = "Mon nom d'affichage";
 
-	<script>
-		const apiKey = '019a9d4cd5ba1cafb67b';
-		const apiSecret = 'a25d0696967ae79d4002';
-		const sipServer = 'sip.zadarma.com';
-		const sipNumber = '326263mber';
-		const sipPassword = 'reyF2Ju31t';
+    Zoiper5.init({
+      onConnect: () => {
+        console.log("Zoiper5 connected to the server");
+      },
+      onDisconnect: () => {
+        console.log("Zoiper5 disconnected from the server");
+      },
+      onCallStatusChange: (callId, status) => {
+        console.log(`Zoiper5 call status: ${status}`);
+        if (status === "connected") {
+          alert("L'appel a été décroché");
+        } else if (status === "ended") {
+          alert("L'appel a été raccroché");
+        }
+      },
+    });
 
-		// Fonction pour générer un nonce
-		function generateNonce(length) {
-			var result = '';
-			var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-			var charactersLength = characters.length;
-			for (var i = 0; i < length; i++) {
-				result += characters.charAt(Math.floor(Math.random() * charactersLength));
-			}
-			return result;
-		}
-
-		// Fonction pour signer une requête
-		function signRequest(request) {
-			// Générer un nonce
-			const nonce = generateNonce(16);
-			// Récupérer l'heure actuelle en millisecondes
-			const timestamp = new Date().getTime();
-			// Concaténer la clé API, la clé secrète, le nonce et le timestamp en une seule chaîne
-			const stringToSign = `${apiKey}${request}${nonce}${timestamp}`;
-			// Calculer le HMAC SHA1 de cette chaîne en utilisant
+    const callButton = document.getElementById("call-button");
+    callButton.addEventListener("click", () => {
+      const numberToCall = document.getElementById("number-to-call").value;
+      const callOptions = {
+        destinationNumber: numberToCall,
+        displayName: displayName,
+        authUsername: sipUsername,
+        authPassword: sipPassword,
+        sipUri: sipUri,
+      };
+     
