@@ -69,27 +69,30 @@
 		<button type="button" id="call-button">Appeler</button>
 	</div>
 
-	<script src="https://zadarma.com/static/phone/v3/js/phone.js"></script>
 	<script>
 		const apiKey = '019a9d4cd5ba1cafb67b';
 		const apiSecret = 'a25d0696967ae79d4002';
 		const sipServer = 'sip.zadarma.com';
-		const sipNumber = '326263';
+		const sipNumber = '326263mber';
 		const sipPassword = 'reyF2Ju31t';
 
-		const phone = new ZadarmaPhone(apiKey, apiSecret, {
-			onConnectionStatusChange: onConnectionStatusChange,
-			onCallStatusChange: onCallStatusChange
-		});
-
-		function onConnectionStatusChange(status) {
-			console.log(`ZadarmaPhone connection status: ${status}`);
+		// Fonction pour générer un nonce
+		function generateNonce(length) {
+			var result = '';
+			var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+			var charactersLength = characters.length;
+			for (var i = 0; i < length; i++) {
+				result += characters.charAt(Math.floor(Math.random() * charactersLength));
+			}
+			return result;
 		}
 
-		function onCallStatusChange(callStatus) {
-			console.log(`ZadarmaPhone call status: ${callStatus}`);
-
-			if (callStatus === 'answered') {
-				alert('L\'appel a été décroché.');
-			} else if (callStatus === 'hangup') {
-				alert('L\'appel a été raccroché 
+		// Fonction pour signer une requête
+		function signRequest(request) {
+			// Générer un nonce
+			const nonce = generateNonce(16);
+			// Récupérer l'heure actuelle en millisecondes
+			const timestamp = new Date().getTime();
+			// Concaténer la clé API, la clé secrète, le nonce et le timestamp en une seule chaîne
+			const stringToSign = `${apiKey}${request}${nonce}${timestamp}`;
+			// Calculer le HMAC SHA1 de cette chaîne en utilisant
