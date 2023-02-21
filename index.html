@@ -60,7 +60,7 @@
 </head>
 <body>
 	<div class="container">
-		<label for="my-number">Votre numéro:</label>
+		<label for="my-number">Mon numéro:</label>
 		<input type="text" id="my-number" name="my-number" placeholder="Saisir votre numéro">
 
 		<label for="number-to-call">Numéro à appeler:</label>
@@ -69,30 +69,27 @@
 		<button type="button" id="call-button">Appeler</button>
 	</div>
 
-	<script src="https://zadarma.com/static/phone/v2/js/phone.js"></script>
+	<script src="https://zadarma.com/static/phone/v3/js/phone.js"></script>
 	<script>
-		const apiKey = '019a9d4cd5ba1cafb67b';
-		const apiSecret = 'a25d0696967ae79d4002';
-		ZadarmaApi.init(apiKey, apiSecret);
+		const apiKey = 'your_api_key';
+		const apiSecret = 'your_api_secret';
+		const sipServer = 'sip.zadarma.com';
+		const sipNumber = 'your_sip_number';
+		const sipPassword = 'your_sip_password';
 
-		const callButton = document.getElementById('call-button');
-
-		callButton.addEventListener('click', () => {
-			const myNumber = document.getElementById('my-number').value;
-			const numberToCall = document.getElementById('number-to-call').value;
-
-			if (myNumber === '' || numberToCall === '') {
-				alert('Veuillez saisir un numéro de téléphone.');
-				return;
-			}
-
-			ZadarmaApi.call(myNumber, numberToCall)
-				.then(() => {
-					alert(`L'appel a été lancé entre ${myNumber} et ${numberToCall}.`);
-				})
-				.catch((error) => {
-					alert(`Impossible de lancer l'appel: ${error.message}`);
-				});
+		const phone = new ZadarmaPhone(apiKey, apiSecret, {
+			onConnectionStatusChange: onConnectionStatusChange,
+			onCallStatusChange: onCallStatusChange
 		});
-	</script>
-</
+
+		function onConnectionStatusChange(status) {
+			console.log(`ZadarmaPhone connection status: ${status}`);
+		}
+
+		function onCallStatusChange(callStatus) {
+			console.log(`ZadarmaPhone call status: ${callStatus}`);
+
+			if (callStatus === 'answered') {
+				alert('L\'appel a été décroché.');
+			} else if (callStatus === 'hangup') {
+				alert('L\'appel a été raccroché 
