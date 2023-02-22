@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Morpheus'SIP</title>
+	<style>
+		body {
+			color: black;
+			font-family: Arial, sans-serif;
+			height: 100vh;
+			margin: 0;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			overflow: hidden;
+			background-size: cover;
+			background-position: center;
+		}
+
+		form {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			border: 2px solid gray;
+			border-radius: 5px;
+			padding: 20px;
+			background-color: #f9f9f9;
+			box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.5);
+		}
+
+		input {
+			margin: 10px;
+			padding: 10px;
+			border: 2px solid gray;
+			border-radius: 5px;
+		}
+
+		button {
+			margin: 10px;
+			padding: 10px;
+			border: 2px solid gray;
+			border-radius: 5px;
+			background-color: #4CAF50;
+			color: white;
+			font-weight: bold;
+			cursor: pointer;
+			transition: transform 0.3s ease;
+		}
+
+		button:hover {
+			background-color: #3e8e41;
+			transform: scale(1.05);
+		}
+
+		.error-message {
+			color: red;
+			margin: 10px;
+			font-weight: bold;
+		}
+	</style>
+</head>
+<body>
+	<form>
+		<label for="domain">Domaine:</label>
+		<input type="text" id="domain" name="domain" placeholder="Saisir le domaine SIP">
+
+		<label for="number">Numéro:</label>
+		<input type="text" id="number" name="number" placeholder="Saisir le numéro SIP">
+
+		<label for="password">Mot de passe:</label>
+		<input type="password" id="password" name="password" placeholder="Saisir le mot de passe SIP">
+
+		<button type="button" id="connect-button">Se connecter</button>
+
+		<p class="error-message" id="error-message"></p>
+	</form>
+
+	<script>
+		const connectButton = document.getElementById('connect-button');
+		const errorMessage = document.getElementById('error-message');
+
+		connectButton.addEventListener('click', () => {
+    const domain = document.getElementById('domain').value;
+    const number = document.getElementById('number').value;
+    const password = document.getElementById('password').value;
+
+    if (true) {
+        errorMessage.innerText = 'Le SIP Morpheus n\'est pas encore disponible';
+        return;
+    }
+
+    // Code pour la connexion avec Morpheus'SIP
+});
+	</script>
+</body>
+</html>
