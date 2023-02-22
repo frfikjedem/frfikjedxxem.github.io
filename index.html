@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Recherche de BIN de carte bancaire</title>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			margin: 0;
+			padding: 0;
+			background-color: #f1f1f1;
+		}
+		.container {
+			max-width: 800px;
+			margin: 0 auto;
+			padding: 20px;
+			background-color: white;
+			box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+			border-radius: 5px;
+		}
+		h1 {
+			text-align: center;
+			margin-top: 0;
+		}
+		form {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			margin-top: 20px;
+		}
+		input {
+			font-size: 18px;
+			padding: 10px;
+			margin: 10px;
+			border: none;
+			border-radius: 5px;
+			box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+		}
+		button {
+			background-color: #4CAF50;
+			color: white;
+			font-size: 18px;
+			padding: 10px 20px;
+			margin: 10px;
+			border: none;
+			border-radius: 5px;
+			box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+			cursor: pointer;
+			transition: background-color 0.3s ease;
+		}
+		button:hover {
+			background-color: #3e8e41;
+		}
+		.result {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			margin-top: 20px;
+			padding: 20px;
+			background-color: #f1f1f1;
+			border-radius: 5px;
+			box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+		}
+		.result h2 {
+			margin-top: 0;
+		}
+		.result p {
+			font-size: 18px;
+			margin: 10px 0;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<h1>Recherche de BIN de carte bancaire</h1>
+		<form id="bin-form">
+			<label for="bin-input">Entrez les 6 premiers chiffres du numéro de carte :</label>
+			<input type="text" id="bin-input" name="bin" pattern="[0-9]{6}" required>
+			<button type="submit">Rechercher</button>
+		</form>
+		<div id="result" class="result">
+			<h2>Résultats de la recherche</h2>
+			<p><strong>Banque :</strong> <span id="bank"></span></p>
+			<p><strong>Pays :</strong> <span id="country"></span></p>
+			<p><strong>Type de carte :</strong> <span id="type"></span></p>
+		</div>
+	</div>
+
+	<script>
+		// Sélection de l'élément de formulaire et des él
