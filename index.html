@@ -1,122 +1,89 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Recherche de carte bancaire</title>
-  <style>
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-    }
-
-    .container {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      background-color: #f7f7f7;
-    }
-
-    h1 {
-      font-size: 36px;
-      margin-bottom: 20px;
-      color: #444444;
-    }
-
-    form {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      background-color: #ffffff;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-      transition: all 0.3s ease;
-    }
-
-    form:hover {
-      transform: translateY(-5px);
-      box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
-    }
-
-    label {
-      font-size: 18px;
-      margin-bottom: 10px;
-      color: #555555;
-    }
-
-    input {
-      border: 1px solid #cccccc;
-      border-radius: 5px;
-      padding: 10px;
-      font-size: 16px;
-      margin-bottom: 20px;
-      width: 100%;
-      transition: border-color 0.3s ease;
-    }
-
-    input:focus {
-      border-color: #007bff;
-    }
-
-    button {
-      background-color: #007bff;
-      color: #ffffff;
-      border: none;
-      border-radius: 5px;
-      padding: 10px 20px;
-      font-size: 18px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    button:hover {
-      background-color: #0062cc;
-    }
-
-    #result {
-      font-size: 18px;
-      color: #444444;
-      margin-top: 20px;
-      text-align: center;
-    }
-  </style>
+	<title>Recherche de BIN de carte bancaire</title>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			margin: 0;
+			padding: 0;
+			background-color: #f1f1f1;
+		}
+		.container {
+			max-width: 800px;
+			margin: 0 auto;
+			padding: 20px;
+			background-color: white;
+			box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+			border-radius: 5px;
+		}
+		h1 {
+			text-align: center;
+			margin-top: 0;
+		}
+		form {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			margin-top: 20px;
+		}
+		input {
+			font-size: 18px;
+			padding: 10px;
+			margin: 10px;
+			border: none;
+			border-radius: 5px;
+			box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+		}
+		button {
+			background-color: #4CAF50;
+			color: white;
+			font-size: 18px;
+			padding: 10px 20px;
+			margin: 10px;
+			border: none;
+			border-radius: 5px;
+			box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+			cursor: pointer;
+			transition: background-color 0.3s ease;
+		}
+		button:hover {
+			background-color: #3e8e41;
+		}
+		.result {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			margin-top: 20px;
+			padding: 20px;
+			background-color: #f1f1f1;
+			border-radius: 5px;
+			box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+		}
+		.result h2 {
+			margin-top: 0;
+		}
+		.result p {
+			font-size: 18px;
+			margin: 10px 0;
+		}
+	</style>
 </head>
 <body>
-  <div class="container">
-    <h1>Recherche de carte bancaire</h1>
-    <form>
-      <label for="bin">BIN (6 chiffres):</label>
-      <input type="text" id="bin" name="bin" maxlength="6">
+	<div class="container">
+		<h1>Recherche de BIN de carte bancaire</h1>
+		<form id="bin-form">
+			<label for="bin-input">Entrez les 6 premiers chiffres du numéro de carte :</label>
+			<input type="text" id="bin-input" name="bin" pattern="[0-9]{6}" required>
+			<button type="submit">Rechercher</button>
+		</form>
+		<div id="result" class="result">
+			<h2>Résultats de la recherche</h2>
+			<p><strong>Banque :</strong> <span id="bank"></span></p>
+			<p><strong>Pays :</strong> <span id="country"></span></p>
+			<p><strong>Type de carte :</strong> <span id="type"></span></p>
+		</div>
+	</div>
 
-      <button id="search-btn" type="button">Rechercher</button>
-    </form>
-
-    <div id="result"></div>
-  </div>
-
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script>
-    $(document).ready(function() {
-      $('form').on('submit', function(event) {
-        event.preventDefault();
-        $('#search-btn').click();
-      });
-
-      $('#search-btn').on('click', function() {
-        var bin = $('#bin').val();
-        if (bin.length !== 6) {
-          $('#result').html('Veuillez entrer un BIN de 6 chiffres.');
-          return;
-        }
-
-        $.ajax({
-          url: 'https://lookup.binlist.net/' + bin,
-          dataType: 'json',
-          success:
+	<script>
+		// Sélection de l'élément de formulaire et des él
