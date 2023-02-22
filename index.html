@@ -1,89 +1,109 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Recherche de BIN de carte bancaire</title>
+	<title>Recherche de carte bancaire</title>
 	<style>
-		body {
-			font-family: Arial, sans-serif;
-			margin: 0;
-			padding: 0;
-			background-color: #f1f1f1;
-		}
 		.container {
-			max-width: 800px;
-			margin: 0 auto;
-			padding: 20px;
-			background-color: white;
-			box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-			border-radius: 5px;
-		}
-		h1 {
-			text-align: center;
-			margin-top: 0;
-		}
-		form {
 			display: flex;
 			flex-direction: column;
 			align-items: center;
-			margin-top: 20px;
+			justify-content: center;
+			height: 100vh;
+			font-size: 24px;
+			font-family: Arial, sans-serif;
 		}
+
+		label {
+			margin-bottom: 10px;
+		}
+
 		input {
-			font-size: 18px;
+			margin-bottom: 20px;
 			padding: 10px;
-			margin: 10px;
+			font-size: 24px;
 			border: none;
-			border-radius: 5px;
-			box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+			border-bottom: 2px solid #ccc;
+			text-align: center;
 		}
+
 		button {
-			background-color: #4CAF50;
-			color: white;
-			font-size: 18px;
 			padding: 10px 20px;
-			margin: 10px;
+			background-color: #008CBA;
+			color: #fff;
+			font-size: 24px;
 			border: none;
 			border-radius: 5px;
-			box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 			cursor: pointer;
 			transition: background-color 0.3s ease;
 		}
+
 		button:hover {
-			background-color: #3e8e41;
+			background-color: #00405d;
 		}
+
 		.result {
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-			margin-top: 20px;
-			padding: 20px;
-			background-color: #f1f1f1;
-			border-radius: 5px;
-			box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+			display: none;
+			margin-top: 30px;
 		}
-		.result h2 {
-			margin-top: 0;
-		}
+
 		.result p {
-			font-size: 18px;
-			margin: 10px 0;
+			margin: 0;
+		}
+
+		.result p:first-of-type {
+			margin-bottom: 10px;
+		}
+
+		.result table {
+			border-collapse: collapse;
+			width: 100%;
+		}
+
+		.result td, .result th {
+			border: 1px solid #ddd;
+			padding: 8px;
+			text-align: left;
+		}
+
+		.result th {
+			background-color: #f2f2f2;
 		}
 	</style>
 </head>
 <body>
 	<div class="container">
-		<h1>Recherche de BIN de carte bancaire</h1>
-		<form id="bin-form">
-			<label for="bin-input">Entrez les 6 premiers chiffres du numéro de carte :</label>
-			<input type="text" id="bin-input" name="bin" pattern="[0-9]{6}" required>
-			<button type="submit">Rechercher</button>
-		</form>
-		<div id="result" class="result">
-			<h2>Résultats de la recherche</h2>
-			<p><strong>Banque :</strong> <span id="bank"></span></p>
-			<p><strong>Pays :</strong> <span id="country"></span></p>
-			<p><strong>Type de carte :</strong> <span id="type"></span></p>
+		<label for="bin">Entrez les 6 premiers chiffres de votre carte bancaire :</label>
+		<input type="text" id="bin" name="bin" pattern="[0-9]{6}" maxlength="6" required>
+		<button type="button" onclick="search()">Rechercher</button>
+		<p id="error-message" style="display: none; color: red;">Veuillez respecter le format requis.</p>
+		<div class="result">
+			<p>Informations sur la carte bancaire :</p>
+			<table>
+				<tr>
+					<th>Numéro de carte</th>
+					<td id="card-number"></td>
+				</tr>
+				<tr>
+					<th>Type de carte</th>
+					<td id="card-type"></td>
+				</tr>
+				<tr>
+					<th>Pays de la banque</th>
+					<td id="bank-country"></td>
+				</tr>
+				<tr>
+					<th>Nom de la banque</th>
+					<td id="bank-name"></td>
+				</tr>
+			</table>
 		</div>
 	</div>
 
 	<script>
-		// Sélection de l'élément de formulaire et des él
+		function search() {
+			var bin = document.getElementById('bin').value;
+
+			if (bin.length !== 6 || !/^[0-9]+$/.test(bin)) {
+				document.getElementById('error-message').style.display = 'block';
+				document.querySelector('.result').style.display = 'none';
+				return;
