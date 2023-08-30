@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0" y="0" width="15" height="13" viewBox="0, 0, 15, 13">
+  <defs>
+    <linearGradient id="Gradient_1" gradientUnits="userSpaceOnUse" x1="65" y1="199" x2="80" y2="212" gradientTransform="matrix(1, 0, 0, 1, -65, -199)">
+      <stop offset="0" stop-color="#47F3D4"/>
+      <stop offset="1" stop-color="#5ABEE1"/>
+    </linearGradient>
+  </defs>
+  <g id="Pro-LP-(Website)">
+    <path d="M4.674,13 L0,8.308 L1.677,6.625 L4.594,9.552 L13.246,0 L15,1.602 z" fill="url(#Gradient_1)" id="Mask"/>
+  </g>
+</svg>
